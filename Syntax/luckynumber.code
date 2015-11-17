@@ -1,0 +1,77 @@
+section "header" {
+
+## 	Tell the compiler that it is written in Q Programming Language - 
+##	this is necessary because all files in Q OS that are for 
+##	programming have the .code extensions so the compiler must be 
+##	able to tell what type of file it is
+
+	define "meta language template" as "q" with options "value "version" as "0.01""
+}
+
+section "main" {
+
+## 	Define the variable templates uint8 and int8 which are unsigned 
+##	and signed 8 bit values respectivly - variable templates in Q are 
+##	like typedef's in C, they let you create variables of that kind
+##	later
+
+	define "signed char template" as "int8" with options "integer as value";
+	define "unsigned char template" as "uint8" with options "integer as value";
+	
+## 	Define a function called strlength that takes a string input that 
+##	will be interpreted as ch - Q is designed to be easy to read whilst 
+##	being a powerful language which is why some of the syntax is longer 
+##	than C or related language syntax
+
+	define "uint8 function" as "strlength" with options "stringtype as ch" {
+
+##		create a uint8 variable called i and set it to 1
+
+		define "uint8 holder" as "i" with options "value "main" as "1"";
+
+##		create a while loop called my cool while loop that will run 
+##		whilst ch is a true value (greater than 0) and every time it 
+##		loops it will add 1 to the value i - In Q everything has a 
+##		name so you can refer to it at any point - for example, while 
+##		the while loop that we called my cool while loop is running, 
+##		we can stop it by writing:
+
+##		perform action "stop" on "my cool while loop" with options 
+##		"run if "i" is greater than "1"";
+
+		define "while statment" as "my cool while loop" with options "value "active if" as "ch is "true"" and "value "contents" as "add "1" to "i"";
+
+#		set the return value of the function to the value of i - 1
+
+		define "function output" as "this is the name of the variable that the output will automatically be sent to if not pipelined" with options "value "main" as "subtract "1" from "i""";
+	}
+	
+##	we move the value 0x0F into eax and 3745 into ebx - we can do this 
+##	without complex __asm__ tags or other things like that because Q is 
+##	a merge of C and Assembly with a powerful new syntax like I said before
+
+	move value "0x0F" into register "eax";
+	move value "3745" into register "ebx";
+ 	
+##	define a signed string value called lucky message and assign it's main 
+##	value to the string "You lucky number today is: "
+
+  	define "signed string" as "lucky message" with options "value "main" as "Your lucky number today is: "";
+
+##	We define a signed uint8 value called lucky number and assign it's main
+##	value to the values in eax + ebx - we do this calculation by assigning 
+##	the sub values in the lucky number variable "a" and "b" to eax and ebx 
+##	respectivly then adding the sub values of lucky number "a" and "b" 
+##	together to create the value to store in the main result value
+
+	define "uint8" as "lucky number" with options "value "a" as "register eax"" and "value "b" as "register ebx"" and "value "main" as multiply value "a" with value "b"";
+
+## 	define a if statment called another great statment of ifs that will run 
+##	if the length of the string lucky message is less than 999 letters long 
+##	and if it runs it will use an externally declared print function located 
+##	in screenutils.code that prints the lucky message followed by the lucky 
+##	number to the screen.
+
+	define "if statment" as "another great statment of ifs" with options "value "active if" as "output of "run function "strlength" in "functions.code" with options "value "ch" as "lucky message"" is less than "999"" and "value "contents" as "run function "print" in "screenutils.code" with options "value "ch" as "join "lucky message" with "lucky number" and "value "target" as "process "Terminal""";
+
+}
