@@ -8,7 +8,11 @@ Q is an Object Oriented Programming Language with one key feature that no other 
 
 Currently there is no compiler for Q. This is because Q is designed to be written and compiled on [Q OS](www.github.com/raphydaphy/Q-OS). Although it may seem unnessary to have to be using Q OS to write Q code, it eliminates the need for many complex compiler logic needed when compiling code for different systems other than that you are compiling on known as [Cross Compiling](https://en.wikipedia.org/wiki/Cross_compiler).
 
-When writing Q code during the very early stages of development for the Q Programming Language, editing Q Code is best done in a pre-existing text editor with syntax highlighting set to <code>sh</code> or <code>shell</code> because the syntax of Q is somewhat similar to that of Shell Scripts - at least on the outside from a readers point of view.
+When writing code in Q, it is best to use the `vim` text editor. This is because [plankp](https://github.com/plankp) created a syntax highlighting file for Q that you can install on your computer simply by downloading and running a setup script that I wrote. In this repository, navigate to [/dev/setup.sh](https://github.com/raphydaphy/Q-Programming-Language/blob/master/dev/setup.sh) or just click that link. Download the file and make sure it has permission to `execute this file as a program`. You can make sure it does in Ubuntu by right clicking the file in the file browser when you have downloaded it, choosing `Properties` then click the second tab in the menu that opens, `Permissions`. Simply tick the bow saying `Allow executing file as program` and then you are able to open a Terminal window, navigate to the folder you put the `setup.sh` file in and run one command to install the `.vim` scripts.
+
+    ./setup.sh
+    
+This will setup everything you need to be able to write code in the `vim` text editor on Ubuntu using the Q Language with the `.code` file extension.
 
 ## What is this repository for?
 
