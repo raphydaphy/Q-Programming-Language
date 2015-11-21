@@ -24,14 +24,14 @@ syn region block start="{" end="}" fold transparent contains=ALLBUT,QPLSec
 syn region block start="(" end=")" fold transparent contains=ALLBUT,QPLSec,QPLCmd,QPLCond,QPLLoop
 
 " Function is a type!?
-syn keyword builtin contained unsigned signed integer char string long bool short byte float double function template
+syn keyword builtin contained unsigned signed integer char string long bool short byte float double function template meta
 
 syn keyword QPLLink inc nextgroup=QPLString skipwhite
 
 syn keyword QPLCmd set make nextgroup=identifier skipwhite
 syn keyword QPLCmd move into
 syn keyword QPLCond if else
-syn keyword QPLLoop while
+syn keyword QPLLoop while for
 syntax keyword QPLBool True False Nil
 syntax keyword QPLBinop + - ** * // / % < <= > >= ^ \|\| \| ~ ! && & nextgroup=QPLString,QPLChar,QPLNumber,QPLFloat,identifier skipwhite
 
