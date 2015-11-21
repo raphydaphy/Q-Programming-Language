@@ -24,7 +24,7 @@ syn region block start="(" end=")" fold transparent contains=ALLBUT,QPLSec,QPLCm
 " Function is a type!?
 syn keyword builtin contained unsigned signed integer char string long bool short byte float double function
 
-syn keyword QPLLink include nextgroup=QPLString skipwhite
+syn keyword QPLLink inc nextgroup=QPLString skipwhite
 
 syn keyword QPLCmd set nextgroup=identifier skipwhite
 syn keyword QPLCmd make nextgroup=identifier skipwhite
