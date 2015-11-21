@@ -24,6 +24,8 @@ syn region block start="(" end=")" fold transparent contains=ALLBUT,QPLSec,QPLCm
 " Function is a type!?
 syn keyword builtin contained unsigned signed integer char string long bool short byte float double function
 
+syn keyword QPLLink include nextgroup=QPLString skipwhite
+
 syn keyword QPLCmd set nextgroup=identifier skipwhite
 syn keyword QPLCmd make nextgroup=identifier skipwhite
 syn keyword QPLCond if else
@@ -31,7 +33,7 @@ syn keyword QPLLoop while
 syntax keyword QPLBool True False Nil
 syntax keyword QPLBinop + - ** * // / % < <= > >= ^ \|\| \| ~ ! && & nextgroup=QPLString,QPLChar,QPLNumber,QPLFloat,identifier skipwhite
 
-syn keyword QPLSec section nextgroup=QPLString skipwhite
+syn keyword QPLSec section nextgroup=identifier skipwhite
 
 syntax region QPLString start=/\v"/ skip=/\v\\./ end=/\v"/
 syntax match QPLChar '\'.\''
@@ -47,6 +49,7 @@ hi def link QPLBool		Boolean
 hi def link builtin		Type
 hi def link QPLCmd		Statement
 hi def link QPLSec		PreProc
+hi def link QPLLink		PreProc
 hi def link QPLString		String
 hi def link QPLCond		Conditional
 hi def link QPLLoop		Repeat
