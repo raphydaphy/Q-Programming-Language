@@ -1,0 +1,4 @@
+section "meta" {
+    make meta lol;
+    set lol = "LOL-ed";
+}

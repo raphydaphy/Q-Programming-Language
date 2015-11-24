@@ -25,6 +25,7 @@ package com.qosdev.QPL;
 
 import com.ymcmp.dictionary.Dictionary;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,12 +50,19 @@ public class Main {
         TokenStream toks = new CommonTokenStream(lex);
         QPLParser parse = new QPLParser(toks);
         ParseTree tree = parse.prog();
-        System.out.println(new ImpVisitor().visit(tree));
+        System.out.println(new ImpVisitor(Paths.get(args[0]).getParent().normalize().toString()).visit(tree));
     }
 
 }
 
 class ImpVisitor extends QPLBaseVisitor<String> {
+
+    final String __FILE_PATH__;
+
+    public ImpVisitor(String path) {
+        super();
+        __FILE_PATH__ = path;
+    }
 
     @Override
     public String visitDataTypes(QPLParser.DataTypesContext ctx) {
@@ -198,8 +206,8 @@ class ImpVisitor extends QPLBaseVisitor<String> {
         META, TEMPLATE, FUNCTION, COMMON
     }
 
-    final Dictionary<String, idTypes> IDENTIFIER_LIST = new Dictionary<>();
-    final Map<String, String> FUNC_LIST = new HashMap<>();
+    static final Dictionary<String, idTypes> IDENTIFIER_LIST = new Dictionary<>();
+    static final Map<String, String> FUNC_LIST = new HashMap<>();
 
     @Override
     public String visitMakeMeta(QPLParser.MakeMetaContext ctx) {
@@ -372,6 +380,26 @@ class ImpVisitor extends QPLBaseVisitor<String> {
             sb.append(visit(ctx.req));
         }
         return sb.toString();
+    }
+
+    @Override
+    public String visitIncludeFile(QPLParser.IncludeFileContext ctx) {
+        String filePath = ctx.path.getText().trim();
+        filePath = filePath.substring(1, filePath.length() - 1);
+        if (filePath.charAt(0) != '/') {
+            filePath = Paths.get(__FILE_PATH__, filePath).toString();
+        }
+        try {
+            ANTLRInputStream ais = new ANTLRFileStream(filePath);
+            QPLLexer lex = new QPLLexer(ais);
+            TokenStream toks = new CommonTokenStream(lex);
+            QPLParser parse = new QPLParser(toks);
+            ParseTree tree = parse.prog();
+            return new ImpVisitor(filePath).visit(tree);
+        } catch (IOException ex) {
+            System.err.println(filePath + " cannot be found! Ignoring");
+            return "";
+        }
     }
 
 }

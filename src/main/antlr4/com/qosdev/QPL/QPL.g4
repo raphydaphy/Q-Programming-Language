@@ -1,7 +1,12 @@
 grammar QPL;
 
 prog:
-    left=section right=prog?
+    left=topLevel right=prog?
+;
+
+topLevel:
+    includeFile
+    | section
 ;
 
 section:
@@ -28,6 +33,14 @@ hstatement:
     | returnVal
     | whileLoop
     | ifCondition
+;
+
+includeFile:
+    Kinc path=Text
+;
+
+Kinc:
+    'inc'
 ;
 
 ifCondition:
