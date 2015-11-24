@@ -1,0 +1,77 @@
+section "meta" {
+	## this is a simple meta header for our Q Program
+	## it contains the language and program information
+	make meta language;	set language = "q";
+	make meta title;	set title = "FizzBuzz Code Challenge in Q";
+	make meta author;	set author = "Raph Hennessy";
+}
+
+section "data" {
+	## we make a variable datatype template here called
+	## int to store signed integer values in our program.
+	make template int;	set int = signed integer;
+	
+	## we need to make the counter variable as the newly
+	## created type 'int' to store the current number
+	make int counter;	set counter = 0;
+	
+	## here we are declaring a variable template called 
+	## intArray. It is a signed integer array datatype.
+	make template intArray;	set intArray = signed integer list;
+	
+	## we have declared our template variable now so we
+	## are now able to create variables of this type.	
+	make intArray FizzBuzz[];
+	
+	## since Q PL supports pattern matching, we can have 
+	## a intArray and a function with the exact same name.
+	make function FizzBuzz();
+}
+
+section "text" {
+	## we are initiating our function FizzBuzz here
+	function FizzBuzz() {
+		
+		## this is a simple for loop that will
+		## continue looping until the counter
+		## variable is greater than 100 and
+		## the counter variable will increase	
+		## by one every time we run the loop
+		for (set counter = 0;counter < 100;set counter = counter + 1) {
+			
+			## we test if the current value
+			## stored in the counter variable
+			## is divisible by 3 and 5.
+			if (counter%5 && counter%3) {
+				set FizzBuzz[counter] = "FizzBuzz";
+			} 
+			
+			## if it was not divisible by
+			## both 3 and 5 at the same time
+			## then we test if it is divisible
+			## only by 5 and not 3
+			else if (counter%5) {
+				set FizzBuzz[counter] = "Buzz";
+			} 
+			
+			## if it is not divisible by 5 then
+			## we will see if our number is
+			## divisible by three instead.
+			else if (counter%3) {
+				set FizzBuzz[counter] = "Fizz";
+			} 
+			
+			## failing to be divisible by three
+			## or five, we just add the number
+			## to the end of the FizzBuzz array
+			else {
+				set FizzBuzz[counter] = counter;
+			}
+		}
+		
+		## when our for loop is finished running we
+		## send the entire FizzBuzz array as the
+		## return value of the FizzBuzz function.
+		result FizzBuzz[];
+	}
+}

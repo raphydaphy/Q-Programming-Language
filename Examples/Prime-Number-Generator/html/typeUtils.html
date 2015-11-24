@@ -1,0 +1,64 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Desktop/Q-PL/Syntax Examples/Prime Generator/typeUtils.code.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="none">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,prevent_copy=">
+<meta name="colorscheme" content="none">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.Type { color: #2e8b57; font-weight: bold; }
+.Statement { color: #a52a2a; font-weight: bold; }
+.PreProc { color: #800080; }
+.Constant { color: #ff00ff; }
+.Identifier { color: #008b8b; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="PreProc">section</span> <span class="Constant">&quot;meta&quot;</span> {
+
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">language</span>;
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">title</span>;
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">author</span>;
+
+	<span class="Statement">set</span> <span class="Identifier">language</span> = <span class="Constant">&quot;q&quot;</span>;
+	<span class="Statement">set</span> <span class="Identifier">title</span> = <span class="Constant">&quot;Variable Type Declarations for Q&quot;</span>;
+	<span class="Statement">set</span> <span class="Identifier">author</span> = <span class="Constant">&quot;Raph Hennessy&quot;</span>;
+
+}
+
+<span class="PreProc">section</span> <span class="Constant">&quot;data&quot;</span> {
+
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">int8</span>; 	<span class="Statement">set</span> <span class="Identifier">int8</span> = <span class="Type">signed</span> <span class="Type">integer</span> <span class="Constant">8</span>;
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">uint8</span>;	<span class="Statement">set</span> <span class="Identifier">uint8</span> = <span class="Type">unsigned</span> <span class="Type">integer</span> <span class="Constant">8</span>;
+
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">int16</span>; 	<span class="Statement">set</span> <span class="Identifier">int16</span> = <span class="Type">signed</span> <span class="Type">integer</span> <span class="Constant">16</span>;
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">uint16</span>;	<span class="Statement">set</span> <span class="Identifier">uint16</span> = <span class="Type">unsigned</span> <span class="Type">integer</span> <span class="Constant">16</span>;
+
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">int32</span>;	<span class="Statement">set</span> <span class="Identifier">int32</span> = <span class="Type">signed</span> <span class="Type">integer</span> <span class="Constant">32</span>;
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">uint32</span>;	<span class="Statement">set</span> <span class="Identifier">uint32</span> = <span class="Type">unsigned</span> <span class="Type">integer</span> <span class="Constant">32</span>;
+
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">int64</span>;	<span class="Statement">set</span> <span class="Identifier">int64</span> = <span class="Type">signed</span> <span class="Type">integer</span> <span class="Constant">64</span>;
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Identifier">uint64</span>;	<span class="Statement">set</span> <span class="Identifier">uint64</span> = <span class="Type">unsigned</span> <span class="Type">integer</span> <span class="Constant">64</span>;
+
+	<span class="Statement">make</span> <span class="Type">template</span> <span class="Type">string</span>;	<span class="Statement">set</span> <span class="Type">string</span> = <span class="Type">unsigned</span> <span class="Type">string</span>;
+
+}
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->
