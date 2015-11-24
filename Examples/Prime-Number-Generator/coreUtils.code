@@ -1,0 +1,59 @@
+section "meta" {
+	
+	## create some meta variables to store data about who made this
+	## this is also used to define the language which is essential
+	make meta language;
+	make meta title;
+	make meta author;
+	
+	## give our meta variables a value so the compiler reads them
+	set language = "q";
+	set title = "Core CPU Functions for Q";
+	set author = "Raph Hennessy";
+	
+	## include the typeUtils.code file so we have access to the templates
+	## that are defined there, such as uint8 and int16 for these functions
+	inc typeUtils.code;	
+	
+}
+
+section "data" {
+	
+	## make all the functions we need for this file
+	make function bufferAssembly(string asm);
+	make function inportb(uint16 port);
+	make function outportb(uint16 port, uint8 data);
+	
+	## set the return value of the inportb function to a uint8 integer
+	## the uint8 integer template is defined in typeUtils.code
+	set inportb(uint16 port) = uint8;
+	
+}
+
+section "text" {
+	
+	## this function is used to prepare Assembly code for running
+	function bufferAssembly(string asm) {
+		make buffer asmBuffer
+		set asmBuffer = asm;
+		move asmBuffer into @ir;
+	}
+	
+	## this function is used to run the inb Assembly function
+	function inportb(uint16 port) {
+		
+		make uint8 temp;
+		bufferAssembly("inb %1, %0");
+		bufferAssembly("=a" + temp);
+		bufferAssembly("dN" + port);
+		result temp;		
+	}
+
+	## this function is used to run the outb Assembly function
+	function outportb(uint16 port, uint8 data) {
+		
+		bufferAssembly("outb %1, %0");
+		bufferAssembly("dN" + port + "a" + data);
+				
+	}
+}

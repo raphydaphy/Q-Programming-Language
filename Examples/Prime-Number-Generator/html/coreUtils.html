@@ -1,0 +1,202 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>~/Desktop/Q-PL/Syntax Examples/Prime Generator/coreUtils.code.html</title>
+<meta name="Generator" content="Vim/7.4">
+<meta name="plugin-version" content="vim7.4_v1">
+<meta name="syntax" content="none">
+<meta name="settings" content="use_css,pre_wrap,no_foldcolumn,prevent_copy=">
+<meta name="colorscheme" content="none">
+<style type="text/css">
+<!--
+pre { white-space: pre-wrap; font-family: monospace; color: #000000; background-color: #ffffff; }
+body { font-family: monospace; color: #000000; background-color: #ffffff; }
+* { font-size: 1em; }
+.Type { color: #2e8b57; font-weight: bold; }
+.Statement { color: #a52a2a; font-weight: bold; }
+.PreProc { color: #800080; }
+.Constant { color: #ff00ff; }
+.Comment { color: #0000ff; }
+.Identifier { color: #008b8b; }
+-->
+</style>
+
+<script type='text/javascript'>
+<!--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="PreProc">section</span> <span class="Constant">&quot;meta&quot;</span> {
+
+	<span class="Comment">## create some meta variables to store data about who made this</span>
+	<span class="Comment">## this is also used to define the language which is essential</span>
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">language</span>;
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">title</span>;
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">author</span>;
+
+	<span class="Comment">## give our meta variables a value so the compiler reads them</span>
+	<span class="Statement">set</span> <span class="Identifier">language</span> = <span class="Constant">&quot;q&quot;</span>;
+	<span class="Statement">set</span> <span class="Identifier">title</span> = <span class="Constant">&quot;Core CPU Functions for Q&quot;</span>;
+	<span class="Statement">set</span> <span class="Identifier">author</span> = <span class="Constant">&quot;Raph Hennessy&quot;</span>;
+
+	<span class="Comment">## include the typeUtils.code file so we have access to the templates</span>
+	<span class="Comment">## that are defined there, such as uint8 and int16 for these functions</span>
+	<span class="PreProc">inc</span> <span class="Identifier">typeUtils</span>.<span class="Identifier">code</span>;
+
+}
+
+<span class="PreProc">section</span> <span class="Constant">&quot;data&quot;</span> {
+
+	<span class="Comment">## make all the functions we need for this file</span>
+	<span class="Statement">make</span> <span class="Type">function</span> <span class="Identifier">bufferAssembly</span>(<span class="Type">string</span> <span class="Identifier">asm</span>);
+	<span class="Statement">make</span> <span class="Type">function</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>);
+	<span class="Statement">make</span> <span class="Type">function</span> <span class="Identifier">outportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>, <span class="Identifier">uint8</span> <span class="Identifier">data</span>);
+
+	<span class="Comment">## set the return value of the inportb function to a uint8 integer</span>
+	<span class="Comment">## the uint8 integer template is defined in typeUtils.code</span>
+	<span class="Statement">set</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>) = <span class="Identifier">uint8</span>;
+
+}
+
+<span class="PreProc">section</span> <span class="Constant">&quot;text&quot;</span> {
+
+	<span class="Comment">## this function is used to prepare Assembly code for running</span>
+	<span class="Type">function</span> <span class="Identifier">bufferAssembly</span>(<span class="Type">string</span> <span class="Identifier">asm</span>) {
+		<span class="Statement">make</span> <span class="Type">buffer</span> <span class="Identifier">asmBuffer</span>
+		<span class="Statement">set</span> <span class="Identifier">asmBuffer</span> = <span class="Identifier">asm</span>;
+		<span class="Identifier">move</span> <span class="Identifier">asmBuffer</span> <span class="Identifier">into</span> @<span class="Identifier">ir</span>;
+	}
+
+	<span class="Comment">## this function is used to run the inb Assembly function</span>
+	<span class="Type">function</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>) {
+
+		<span class="Statement">make</span> <span class="Identifier">uint8</span> <span class="Identifier">temp</span>;
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;inb %1, %0&quot;</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;=a&quot;</span> + <span class="Identifier">temp</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;dN&quot;</span> + <span class="Identifier">port</span>);
+		<span class="Statement">result</span> <span class="Identifier">temp</span>;
+	}
+
+	<span class="Comment">## this function is used to run the outb Assembly function</span>
+	<span class="Type">function</span> <span class="Identifier">outportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>, <span class="Identifier">uint8</span> <span class="Identifier">data</span>) {
+
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;outb %1, %0&quot;</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;dN&quot;</span> + <span class="Identifier">port</span> + <span class="Constant">&quot;a&quot;</span> + <span class="Identifier">data</span>);
+
+	}
+}
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->--
+
+-->
+</script>
+</head>
+<body>
+<pre id='vimCodeElement'>
+<span class="PreProc">section</span> <span class="Constant">&quot;meta&quot;</span> {
+
+	<span class="Comment">## create some meta variables to store data about who made this</span>
+	<span class="Comment">## this is also used to define the language which is essential</span>
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">language</span>;
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">title</span>;
+	<span class="Statement">make</span> <span class="Type">meta</span> <span class="Identifier">author</span>;
+
+	<span class="Comment">## give our meta variables a value so the compiler reads them</span>
+	<span class="Statement">set</span> <span class="Identifier">language</span> = <span class="Constant">&quot;q&quot;</span>;
+	<span class="Statement">set</span> <span class="Identifier">title</span> = <span class="Constant">&quot;Core CPU Functions for Q&quot;</span>;
+	<span class="Statement">set</span> <span class="Identifier">author</span> = <span class="Constant">&quot;Raph Hennessy&quot;</span>;
+
+	<span class="Comment">## include the typeUtils.code file so we have access to the templates</span>
+	<span class="Comment">## that are defined there, such as uint8 and int16 for these functions</span>
+	<span class="PreProc">inc</span> <span class="Identifier">typeUtils</span>.<span class="Identifier">code</span>;
+
+}
+
+<span class="PreProc">section</span> <span class="Constant">&quot;data&quot;</span> {
+
+	<span class="Comment">## make all the functions we need for this file</span>
+	<span class="Statement">make</span> <span class="Type">function</span> <span class="Identifier">bufferAssembly</span>(<span class="Type">string</span> <span class="Identifier">asm</span>);
+	<span class="Statement">make</span> <span class="Type">function</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>);
+	<span class="Statement">make</span> <span class="Type">function</span> <span class="Identifier">outportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>, <span class="Identifier">uint8</span> <span class="Identifier">data</span>);
+
+	<span class="Comment">## set the return value of the inportb function to a uint8 integer</span>
+	<span class="Comment">## the uint8 integer template is defined in typeUtils.code</span>
+	<span class="Statement">set</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>) = <span class="Identifier">uint8</span>;
+
+}
+
+<span class="PreProc">section</span> <span class="Constant">&quot;text&quot;</span> {
+
+	<span class="Comment">## this function is used to prepare Assembly code for running</span>
+	<span class="Type">function</span> <span class="Identifier">bufferAssembly</span>(<span class="Type">string</span> <span class="Identifier">asm</span>) {
+		<span class="Statement">make</span> <span class="Type">buffer</span> <span class="Identifier">asmBuffer</span>
+		<span class="Statement">set</span> <span class="Identifier">asmBuffer</span> = <span class="Identifier">asm</span>;
+		<span class="Identifier">move</span> <span class="Identifier">asmBuffer</span> <span class="Identifier">into</span> @<span class="Identifier">ir</span>;
+	}
+
+	<span class="Comment">## this function is used to run the inb Assembly function</span>
+	<span class="Type">function</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>) {
+
+		<span class="Statement">make</span> <span class="Identifier">uint8</span> <span class="Identifier">temp</span>;
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;inb %1, %0&quot;</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;=a&quot;</span> + <span class="Identifier">temp</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;dN&quot;</span> + <span class="Identifier">port</span>);
+		<span class="Statement">result</span> <span class="Identifier">temp</span>;
+	}
+
+	<span class="Comment">## this function is used to run the outb Assembly function</span>
+	<span class="Type">function</span> <span class="Identifier">outportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>, <span class="Identifier">uint8</span> <span class="Identifier">data</span>) {
+
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;outb %1, %0&quot;</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;dN&quot;</span> + <span class="Identifier">port</span> + <span class="Constant">&quot;a&quot;</span> + <span class="Identifier">data</span>);
+
+	}
+}
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->s="Identifier">data</span>);
+
+	<span class="Comment">## set the return value of the inportb function to a uint8 integer</span>
+	<span class="Comment">## the uint8 integer template is defined in typeUtils.code</span>
+	<span class="Statement">set</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>) = <span class="Identifier">uint8</span>;
+
+}
+
+<span class="PreProc">section</span> <span class="Constant">&quot;text&quot;</span> {
+
+	<span class="Comment">## this function is used to prepare Assembly code for running</span>
+	<span class="Type">function</span> <span class="Identifier">bufferAssembly</span>(<span class="Type">string</span> <span class="Identifier">asm</span>) {
+		<span class="Statement">make</span> <span class="Type">buffer</span> <span class="Identifier">asmBuffer</span>
+		<span class="Statement">set</span> <span class="Identifier">asmBuffer</span> = <span class="Identifier">asm</span>;
+		<span class="Identifier">move</span> <span class="Identifier">asmBuffer</span> <span class="Identifier">into</span> @<span class="Identifier">ir</span>;
+	}
+
+	<span class="Comment">## this function is used to run the inb Assembly function</span>
+	<span class="Type">function</span> <span class="Identifier">inportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>) {
+
+		<span class="Statement">make</span> <span class="Identifier">uint8</span> <span class="Identifier">temp</span>;
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;inb %1, %0&quot;</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;=a&quot;</span> + <span class="Identifier">temp</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;dN&quot;</span> + <span class="Identifier">port</span>);
+		<span class="Statement">result</span> <span class="Identifier">temp</span>;
+	}
+
+	<span class="Comment">## this function is used to run the outb Assembly function</span>
+	<span class="Type">function</span> <span class="Identifier">outportb</span>(<span class="Identifier">uint16</span> <span class="Identifier">port</span>, <span class="Identifier">uint8</span> <span class="Identifier">data</span>) {
+
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;outb %1, %0&quot;</span>);
+		<span class="Identifier">bufferAssembly</span>(<span class="Constant">&quot;dN&quot;</span> + <span class="Identifier">port</span> + <span class="Constant">&quot;a&quot;</span> + <span class="Identifier">data</span>);
+
+	}
+}
+</pre>
+</body>
+</html>
+<!-- vim: set foldmethod=manual : -->

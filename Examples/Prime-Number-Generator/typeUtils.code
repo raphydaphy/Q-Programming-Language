@@ -1,0 +1,29 @@
+section "meta" {
+	
+	make meta language;
+	make meta title;
+	make meta author;
+	
+	set language = "q";
+	set title = "Variable Type Declarations for Q";
+	set author = "Raph Hennessy";
+	
+}
+
+section "data" {
+	
+	make template int8; 	set int8 = signed integer 8;
+	make template uint8;	set uint8 = unsigned integer 8;
+	
+	make template int16; 	set int16 = signed integer 16;
+	make template uint16;	set uint16 = unsigned integer 16;
+	
+	make template int32;	set int32 = signed integer 32;
+	make template uint32;	set uint32 = unsigned integer 32;
+	
+	make template int64;	set int64 = signed integer 64;
+	make template uint64;	set uint64 = unsigned integer 64;
+	
+	make template string;	set string = unsigned string;
+	
+}
