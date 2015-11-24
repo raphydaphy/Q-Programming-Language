@@ -1,5 +1,5 @@
-# Install vim if it is not already downloaded
-apt-get install vim
+# Install vim and maven if it is not already downloaded
+apt-get install vim maven
 
 # Create the directories we need for the .vim files
 mkdir $HOME/.vim $HOME/.vim/syntax $HOME/.vim/ftdetect
