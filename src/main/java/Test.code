@@ -1,6 +1,12 @@
 ## One issue is that sections currently do nothing
 ## I guess it organizes the code...
 
+## Backslashes are path delimeters
+## By default, it searches the file's path
+inc "lol.code"
+
+## if path starts with a slash, it means absolute path
+
 section "meta" {
     ## this is a simple meta header for our Q Program
     ## it contains the language and program information
@@ -14,6 +20,7 @@ section "meta" {
 
 section "data" {
     make function voidRet();
+    make function main:int();
     make function addi:int(a:int, b:int);
 
     make template intptr;
@@ -26,22 +33,24 @@ section "text" {
         result a + b;
     };
 
-    ## we need to make the counter variable as the newl
-    ## created type 'int' to store the current number
-    make int counter;
-    set counter = 0;
+    set main = function {
+        ## we need to make the counter variable as the newl
+        ## created type 'int' to store the current number
+        make int counter;
+        set counter = 0;
 
-    ## expressions do not need to be braced!!!
-    while counter < 100 {
-        if (counter % 5) && (counter % 3) {
-            result "fizzbuzz";
-        } else if counter % 5 {
-            result "buzz";
-        } else if counter % 3 {
-            result "fizz";
-        } else {
-            result counter;
+        ## expressions do not need to be braced!!!
+        while counter < 100 {
+            if (counter % 5) && (counter % 3) {
+                result "fizzbuzz";
+            } else if counter % 5 {
+                result "buzz";
+            } else if counter % 3 {
+                result "fizz";
+            } else {
+                result counter;
+            };
+            set counter = counter + 1;
         };
-        set counter = counter + 1;
     };
 }
